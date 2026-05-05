@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toros Senepol | Cabaña La Mañanita</title>
+    <meta name="description" content="Catálogo de toros Senepol de Cabaña La Mañanita. Genética tropical adaptada, con tolerancia al calor y resistencia a parásitos.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'verde-oscuro': '#1a3a2f',
+                        'verde-claro': '#2d5a47',
+                        'tierra': '#8b7355',
+                        'tierra-clara': '#a08b6e',
+                        'crema': '#f5f1e8',
+                        'crema-oscura': '#e8e1d4',
+                        'gris-oscuro': '#2c2c2c',
+                        'gris-medio': '#5c5c5c'
+                    },
+                    fontFamily: {
+                        'serif': ['Georgia', 'Cambria', 'Times New Roman', 'serif'],
+                        'sans': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .line-clamp-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+    </style>
+</head>
+<body class="bg-crema text-gris-oscuro font-sans">
+
+    <!-- Header -->
+    <header class="bg-verde-oscuro text-crema sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 md:h-20">
+                <a href="/" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 md:w-12 md:h-12 bg-tierra rounded-full flex items-center justify-center">
+                        <span class="text-crema font-serif font-bold text-lg md:text-xl">LM</span>
+                    </div>
+                    <div class="hidden sm:block">
+                        <span class="font-serif text-xl md:text-2xl font-bold tracking-wide">La Mañanita</span>
+                    </div>
+                </a>
+                <nav class="hidden lg:flex items-center space-x-8">
+                    <a href="/" class="text-crema/80 hover:text-crema transition-colors">Inicio</a>
+                    <a href="/nosotros/" class="text-crema/80 hover:text-crema transition-colors">Nosotros</a>
+                    <div class="relative group">
+                        <a href="/cabana/" class="text-crema font-medium flex items-center">Cabaña
+                            <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                        </a>
+                        <div class="absolute top-full left-0 pt-2 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                            <div class="bg-white rounded-lg shadow-xl py-2 min-w-48">
+                                <a href="/cabana/angus/" class="block px-4 py-2 text-gris-oscuro hover:bg-crema">Angus</a>
+                                <a href="/cabana/senepol/" class="block px-4 py-2 text-gris-oscuro hover:bg-crema font-medium bg-crema">Senepol</a>
+                                <a href="/cabana/senangus/" class="block px-4 py-2 text-gris-oscuro hover:bg-crema">Senangus</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/contacto/" class="text-crema/80 hover:text-crema transition-colors">Contacto</a>
+                </nav>
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md hover:bg-verde-claro transition-colors" aria-label="Abrir menú">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+                </button>
+            </div>
+        </div>
+        <div id="mobile-menu" class="lg:hidden hidden bg-verde-claro">
+            <div class="px-4 py-3 space-y-2">
+                <a href="/" class="block py-2 text-crema/80 hover:text-crema">Inicio</a>
+                <a href="/nosotros/" class="block py-2 text-crema/80 hover:text-crema">Nosotros</a>
+                <a href="/cabana/" class="block py-2 text-crema font-medium">Cabaña</a>
+                <div class="pl-4 space-y-1">
+                    <a href="/cabana/angus/" class="block py-1 text-crema/70 hover:text-crema text-sm">Angus</a>
+                    <a href="/cabana/senepol/" class="block py-1 text-crema font-medium text-sm">Senepol</a>
+                    <a href="/cabana/senangus/" class="block py-1 text-crema/70 hover:text-crema text-sm">Senangus</a>
+                </div>
+                <a href="/contacto/" class="block py-2 text-crema/80 hover:text-crema">Contacto</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Breadcrumb -->
+        <div class="bg-crema-oscura border-b border-tierra/10">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                <nav class="flex items-center space-x-2 text-sm">
+                    <a href="/" class="text-gris-medio hover:text-verde-oscuro transition-colors">Inicio</a>
+                    <span class="text-gris-medio">/</span>
+                    <a href="/cabana/" class="text-gris-medio hover:text-verde-oscuro transition-colors">Cabaña</a>
+                    <span class="text-gris-medio">/</span>
+                    <a href="/cabana/senepol/" class="text-gris-medio hover:text-verde-oscuro transition-colors">Senepol</a>
+                    <span class="text-gris-medio">/</span>
+                    <span class="text-verde-oscuro font-medium">Toros</span>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Hero Section -->
+        <section class="bg-gradient-to-b from-crema-oscura to-crema py-12 md:py-16">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="max-w-3xl">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <span class="px-3 py-1 bg-red-600 text-white text-xs font-semibold rounded-full uppercase tracking-wide">Senepol</span>
+                        <span class="px-3 py-1 bg-verde-oscuro text-crema text-xs font-semibold rounded-full uppercase tracking-wide">Toros</span>
+                    </div>
+                    <h1 class="font-serif text-3xl md:text-4xl lg:text-5xl text-verde-oscuro font-bold mb-4">Toros Senepol</h1>
+                    <p class="text-lg text-gris-medio leading-relaxed">Reproductores de genética tropical, seleccionados por su adaptación al calor, tolerancia a ectoparásitos y excelente temperamento.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Filtros y Catálogo -->
+        <section class="py-8 md:py-12">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="bg-white rounded-xl shadow-sm border border-tierra/10 p-4 md:p-6 mb-8">
+                    <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+                        <div class="flex-1 max-w-md">
+                            <div class="relative">
+                                <svg class="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gris-medio" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/></svg>
+                                <input type="text" id="buscar" placeholder="Buscar por nombre o RP..." class="w-full pl-10 pr-4 py-2.5 border border-tierra/20 rounded-lg focus:ring-2 focus:ring-verde-oscuro focus:border-verde-oscuro transition-colors">
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <label for="filtro-estado" class="text-sm font-medium text-gris-medio">Estado:</label>
+                            <select id="filtro-estado" class="px-4 py-2.5 border border-tierra/20 rounded-lg focus:ring-2 focus:ring-verde-oscuro focus:border-verde-oscuro bg-white">
+                                <option value="todos">Todos</option>
+                                <option value="disponible">Disponible</option>
+                                <option value="reservado">Reservado</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-4 pt-4 border-t border-tierra/10 flex items-center justify-between">
+                        <p class="text-sm text-gris-medio">Mostrando <span id="contador" class="font-semibold text-verde-oscuro">0</span> ejemplares</p>
+                        <a href="/cabana/senepol/" class="text-sm text-verde-oscuro hover:text-verde-claro font-medium flex items-center">
+                            <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/></svg>
+                            Volver a Senepol
+                        </a>
+                    </div>
+                </div>
+                <div id="catalogo-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"></div>
+                <div id="estado-vacio" class="hidden text-center py-16">
+                    <svg class="w-16 h-16 mx-auto text-tierra/40 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                    <h3 class="text-xl font-serif text-gris-oscuro mb-2">No se encontraron ejemplares</h3>
+                    <p class="text-gris-medio mb-4">Intentá ajustar los filtros de búsqueda</p>
+                    <button onclick="limpiarFiltros()" class="px-4 py-2 bg-verde-oscuro text-crema rounded-lg hover:bg-verde-claro transition-colors">Limpiar filtros</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- CTA Contacto -->
+        <section class="bg-verde-oscuro py-12">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h2 class="font-serif text-2xl md:text-3xl text-crema font-bold mb-4">¿Interesado en nuestra genética Senepol?</h2>
+                <p class="text-crema/80 mb-6">Contactanos para coordinar una visita o recibir más información.</p>
+                <a href="/contacto/" class="inline-flex items-center px-6 py-3 bg-tierra text-crema font-semibold rounded-lg hover:bg-tierra-clara transition-colors">
+                    Consultar disponibilidad
+                    <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gris-oscuro text-crema/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-1">
+                    <div class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 bg-tierra rounded-full flex items-center justify-center"><span class="text-crema font-serif font-bold">LM</span></div>
+                        <span class="font-serif text-xl font-bold text-crema">La Mañanita</span>
+                    </div>
+                    <p class="text-sm leading-relaxed">Cabaña de cría bovina. Genética Angus, Senepol y Senangus.</p>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-crema mb-4">Navegación</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="hover:text-crema transition-colors">Inicio</a></li>
+                        <li><a href="/nosotros/" class="hover:text-crema transition-colors">Nosotros</a></li>
+                        <li><a href="/cabana/" class="hover:text-crema transition-colors">Cabaña</a></li>
+                        <li><a href="/contacto/" class="hover:text-crema transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-crema mb-4">Razas</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/cabana/angus/" class="hover:text-crema transition-colors">Angus</a></li>
+                        <li><a href="/cabana/senepol/" class="hover:text-crema transition-colors">Senepol</a></li>
+                        <li><a href="/cabana/senangus/" class="hover:text-crema transition-colors">Senangus</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-semibold text-crema mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li>Establecimiento La Mañanita</li>
+                        <li>Córdoba, Argentina</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-crema/10 mt-8 pt-8 text-center text-sm">
+                <p>&copy; 2024 Cabaña La Mañanita. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/data/animales.js"></script>
+    <script src="/assets/js/main.js"></script>
+    <script>
+        const CONFIG = { raza: 'senepol', sexo: 'macho', titulo: 'Toros Senepol', whatsappBase: 'https://wa.me/5493515555555?text=' };
+        let filtros = { busqueda: '', estado: 'todos' };
+        const grid = document.getElementById('catalogo-grid');
+        const contador = document.getElementById('contador');
+        const estadoVacio = document.getElementById('estado-vacio');
+        const inputBuscar = document.getElementById('buscar');
+        const selectEstado = document.getElementById('filtro-estado');
+
+        function calcularEdad(fechaNacimiento) {
+            const nacimiento = new Date(fechaNacimiento);
+            const hoy = new Date();
+            const diffMeses = (hoy.getFullYear() - nacimiento.getFullYear()) * 12 + (hoy.getMonth() - nacimiento.getMonth());
+            if (diffMeses < 12) return `${diffMeses} meses`;
+            const años = Math.floor(diffMeses / 12);
+            const meses = diffMeses % 12;
+            return meses > 0 ? `${años} año${años > 1 ? 's' : ''} ${meses} mes${meses > 1 ? 'es' : ''}` : `${años} año${años > 1 ? 's' : ''}`;
+        }
+
+        function getEstadoClase(estado) {
+            const clases = { 'disponible': 'bg-green-100 text-green-800', 'reservado': 'bg-yellow-100 text-yellow-800', 'vendido': 'bg-red-100 text-red-800', 'propio': 'bg-blue-100 text-blue-800' };
+            return clases[estado] || 'bg-gray-100 text-gray-800';
+        }
+
+        function crearCard(animal) {
+            const edad = calcularEdad(animal.fechaNacimiento);
+            const estadoClase = getEstadoClase(animal.estado);
+            const imagenPrincipal = animal.imagenes && animal.imagenes.length > 0 ? animal.imagenes[0] : null;
+            const whatsappMsg = encodeURIComponent(`Hola, me interesa el toro ${animal.nombre} (RP: ${animal.rp}) de raza Senepol. ¿Podrían darme más información?`);
+            return `
+                <article class="bg-white rounded-xl shadow-sm border border-tierra/10 overflow-hidden hover:shadow-lg transition-all duration-300 group">
+                    <div class="relative aspect-[4/3] bg-crema-oscura overflow-hidden">
+                        ${imagenPrincipal ? `<img src="${imagenPrincipal}" alt="${animal.nombre}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" onerror="this.parentElement.innerHTML='<div class=\\'w-full h-full flex items-center justify-center\\'><svg class=\\'w-16 h-16 text-tierra/30\\' fill=\\'none\\' stroke=\\'currentColor\\' viewBox=\\'0 0 24 24\\'><path stroke-linecap=\\'round\\' stroke-linejoin=\\'round\\' stroke-width=\\'1\\' d=\\'M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z\\'></path></svg></div>'">`
+                        : `<div class="w-full h-full flex items-center justify-center"><svg class="w-16 h-16 text-tierra/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg></div>`}
+                        <div class="absolute top-3 left-3 flex flex-wrap gap-2">
+                            <span class="px-2 py-1 ${estadoClase} text-xs font-semibold rounded-full capitalize">${animal.estado}</span>
+                            ${animal.destacado ? '<span class="px-2 py-1 bg-tierra text-crema text-xs font-semibold rounded-full">Destacado</span>' : ''}
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-start justify-between mb-2">
+                            <h3 class="font-serif text-lg font-bold text-verde-oscuro">${animal.nombre}</h3>
+                            <span class="text-xs text-gris-medio bg-crema px-2 py-1 rounded">RP: ${animal.rp}</span>
+                        </div>
+                        <p class="text-sm text-gris-medio mb-3">${animal.categoria} · ${edad}</p>
+                        <div class="flex items-center justify-between text-sm mb-4">
+                            ${animal.pesoActual ? `<span class="text-gris-oscuro"><strong>${animal.pesoActual}</strong> kg</span>` : '<span></span>'}
+                            ${animal.deps && animal.deps.destete ? `<span class="text-verde-oscuro">DEP Destete: <strong>${animal.deps.destete > 0 ? '+' : ''}${animal.deps.destete}</strong></span>` : ''}
+                        </div>
+                        <div class="flex gap-2">
+                            <a href="/animal.html?id=${animal.id}" class="flex-1 text-center px-3 py-2 bg-verde-oscuro text-crema text-sm font-medium rounded-lg hover:bg-verde-claro transition-colors">Ver ficha</a>
+                            <a href="${CONFIG.whatsappBase}${whatsappMsg}" target="_blank" rel="noopener" class="px-3 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors" title="Consultar por WhatsApp">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                            </a>
+                        </div>
+                    </div>
+                </article>`;
+        }
+
+        function renderizarCatalogo() {
+            let animalesFiltrados = window.ANIMALES.filter(a => a.raza === CONFIG.raza && a.sexo === CONFIG.sexo);
+            if (filtros.busqueda) {
+                const busqueda = filtros.busqueda.toLowerCase();
+                animalesFiltrados = animalesFiltrados.filter(a => a.nombre.toLowerCase().includes(busqueda) || a.rp.toLowerCase().includes(busqueda));
+            }
+            if (filtros.estado !== 'todos') animalesFiltrados = animalesFiltrados.filter(a => a.estado === filtros.estado);
+            contador.textContent = animalesFiltrados.length;
+            if (animalesFiltrados.length === 0) {
+                grid.classList.add('hidden');
+                estadoVacio.classList.remove('hidden');
+            } else {
+                grid.classList.remove('hidden');
+                estadoVacio.classList.add('hidden');
+                grid.innerHTML = animalesFiltrados.map(crearCard).join('');
+            }
+        }
+
+        function limpiarFiltros() {
+            inputBuscar.value = '';
+            selectEstado.value = 'todos';
+            filtros = { busqueda: '', estado: 'todos' };
+            renderizarCatalogo();
+        }
+
+        let debounceTimer;
+        inputBuscar.addEventListener('input', (e) => { clearTimeout(debounceTimer); debounceTimer = setTimeout(() => { filtros.busqueda = e.target.value; renderizarCatalogo(); }, 300); });
+        selectEstado.addEventListener('change', (e) => { filtros.estado = e.target.value; renderizarCatalogo(); });
+        document.addEventListener('DOMContentLoaded', renderizarCatalogo);
+    </script>
+</body>
+</html>

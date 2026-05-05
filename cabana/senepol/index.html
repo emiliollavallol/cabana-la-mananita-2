@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Senepol | La Mañanita - Cabaña de Cría Bovina</title>
+  <meta name="description" content="Catálogo de bovinos Senepol de Cabaña La Mañanita. Reproductores masculinos y femeninos de alta calidad genética.">
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'verde': { 50: '#f4f7f4', 100: '#e3ebe3', 200: '#c7d7c7', 300: '#9db89d', 400: '#6f956f', 500: '#4d754d', 600: '#3a5d3a', 700: '#2f4a2f', 800: '#1f331f', 900: '#162416', 950: '#0a130a' },
+            'tierra': { 50: '#faf8f5', 100: '#f3efe8', 200: '#e5ddd0', 300: '#d4c5b0', 400: '#bfa88a', 500: '#a68f6d', 600: '#8a7456', 700: '#725f47', 800: '#5e4e3c', 900: '#4d4133', 950: '#29221a' },
+            'crema': { 50: '#fefdfb', 100: '#fdf9f3', 200: '#f9f2e6', 300: '#f3e6d2', 400: '#ebcfc0', 500: '#e0c5a8' },
+            'gris': { 50: '#f7f7f7', 100: '#e3e3e3', 200: '#c8c8c8', 300: '#a4a4a4', 400: '#818181', 500: '#666666', 600: '#515151', 700: '#434343', 800: '#383838', 900: '#2d2d2d', 950: '#1a1a1a' }
+          },
+          fontFamily: { 'sans': ['Inter', 'system-ui', 'sans-serif'], 'serif': ['Merriweather', 'Georgia', 'serif'] }
+        }
+      }
+    }
+  </script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, sans-serif; }
+    .nav-link { position: relative; }
+    .nav-link::after { content: ''; position: absolute; bottom: -2px; left: 0; width: 0; height: 2px; background-color: #a68f6d; transition: width 0.3s ease; }
+    .nav-link:hover::after { width: 100%; }
+    .dropdown-menu { opacity: 0; visibility: hidden; transform: translateY(-10px); transition: all 0.2s ease; }
+    .dropdown:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+    .mobile-menu { transform: translateX(100%); transition: transform 0.3s ease; }
+    .mobile-menu.active { transform: translateX(0); }
+    .overlay { opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+    .overlay.active { opacity: 1; visibility: visible; }
+  </style>
+</head>
+<body class="bg-crema-100 text-gris-800 antialiased">
+
+  <!-- HEADER -->
+  <header id="header" class="fixed top-0 left-0 right-0 z-50 bg-verde-800 shadow-lg">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 md:h-20">
+        <a href="/" class="flex items-center space-x-3 flex-shrink-0">
+          <div class="w-10 h-10 md:w-12 md:h-12 bg-crema-100 rounded-full flex items-center justify-center">
+            <span class="text-verde-800 font-serif font-bold text-lg md:text-xl">LM</span>
+          </div>
+          <div class="hidden sm:block">
+            <span class="text-crema-100 font-serif font-bold text-lg md:text-xl">La Mañanita</span>
+            <span class="block text-tierra-400 text-xs tracking-wider uppercase">Cabaña de Cría</span>
+          </div>
+        </a>
+        <nav class="hidden lg:flex items-center space-x-8">
+          <a href="/" class="nav-link text-crema-100 hover:text-tierra-300 font-medium">Inicio</a>
+          <a href="/nosotros/" class="nav-link text-crema-100 hover:text-tierra-300 font-medium">Nosotros</a>
+          <div class="dropdown relative">
+            <a href="/cabana/" class="nav-link text-tierra-400 font-medium flex items-center">Cabaña
+              <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+            </a>
+            <div class="dropdown-menu absolute left-0 top-full pt-2">
+              <div class="bg-white rounded-lg shadow-xl py-2 min-w-48 border border-gris-100">
+                <a href="/cabana/angus/" class="block px-4 py-2 text-gris-700 hover:bg-crema-100 hover:text-verde-700 font-medium">Angus</a>
+                <a href="/cabana/senepol/" class="block px-4 py-2 text-verde-700 bg-crema-100 font-medium">Senepol</a>
+                <a href="/cabana/senangus/" class="block px-4 py-2 text-gris-700 hover:bg-crema-100 hover:text-verde-700 font-medium">Senangus</a>
+              </div>
+            </div>
+          </div>
+          <a href="/contacto/" class="nav-link text-crema-100 hover:text-tierra-300 font-medium">Contacto</a>
+        </nav>
+        <button id="mobile-menu-btn" class="lg:hidden p-2 text-crema-100 hover:text-tierra-300" aria-label="Abrir menú">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+      </div>
+    </div>
+    <div id="mobile-menu" class="mobile-menu fixed top-0 right-0 h-full w-80 max-w-full bg-verde-900 shadow-2xl lg:hidden z-50">
+      <div class="flex flex-col h-full">
+        <div class="flex items-center justify-between p-4 border-b border-verde-700">
+          <span class="text-crema-100 font-serif font-bold text-lg">Menú</span>
+          <button id="mobile-menu-close" class="p-2 text-crema-100 hover:text-tierra-300" aria-label="Cerrar menú">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+          </button>
+        </div>
+        <nav class="flex-1 overflow-y-auto py-4">
+          <a href="/" class="block px-6 py-3 text-crema-100 hover:bg-verde-800 font-medium">Inicio</a>
+          <a href="/nosotros/" class="block px-6 py-3 text-crema-100 hover:bg-verde-800 font-medium">Nosotros</a>
+          <a href="/cabana/" class="block px-6 py-3 text-tierra-400 font-medium">Cabaña</a>
+          <a href="/cabana/angus/" class="block px-8 py-2 text-crema-200 hover:text-tierra-300 text-sm">Angus</a>
+          <a href="/cabana/senepol/" class="block px-8 py-2 text-tierra-300 font-medium text-sm">→ Senepol</a>
+          <a href="/cabana/senangus/" class="block px-8 py-2 text-crema-200 hover:text-tierra-300 text-sm">Senangus</a>
+          <a href="/contacto/" class="block px-6 py-3 text-crema-100 hover:bg-verde-800 font-medium">Contacto</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+  <div id="overlay" class="overlay fixed inset-0 bg-black/50 z-40 lg:hidden"></div>
+
+  <!-- MAIN -->
+  <main class="pt-16 md:pt-20">
+    
+    <!-- Page Header -->
+    <section class="bg-verde-800 text-crema-100 py-16 md:py-24">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="text-sm mb-6">
+          <a href="/" class="text-crema-300 hover:text-tierra-400">Inicio</a>
+          <span class="mx-2 text-crema-400">/</span>
+          <a href="/cabana/" class="text-crema-300 hover:text-tierra-400">Cabaña</a>
+          <span class="mx-2 text-crema-400">/</span>
+          <span class="text-tierra-400">Senepol</span>
+        </nav>
+        <h1 class="font-serif text-4xl md:text-5xl font-bold mb-4">Senepol</h1>
+        <p class="text-crema-200 text-lg max-w-2xl">
+          Raza tropical de pelaje rojo y pelo corto, adaptada al calor con excelente temperamento, eficiencia reproductiva y rusticidad.
+        </p>
+      </div>
+    </section>
+
+    <!-- Categorías -->
+    <section class="py-16 md:py-24 bg-crema-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          
+          <!-- Card Masculinos -->
+          <a href="/cabana/senepol/masculinos.html" class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+            <div class="aspect-[16/10] bg-gris-200 flex items-center justify-center">
+              <span class="text-gris-400">Imagen toros Senepol</span>
+            </div>
+            <div class="p-6">
+              <h2 class="font-serif text-2xl font-bold text-verde-800 group-hover:text-tierra-600 transition-colors mb-2">
+                Masculinos
+              </h2>
+              <p class="text-gris-600 text-sm mb-4">
+                Toros y toritos Senepol con tolerancia al calor y excelentes DEPs.
+              </p>
+              <span class="inline-flex items-center text-verde-700 font-medium text-sm group-hover:translate-x-1 transition-transform">
+                Ver catálogo
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+
+          <!-- Card Femeninos -->
+          <a href="/cabana/senepol/femeninos.html" class="group bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-all">
+            <div class="aspect-[16/10] bg-gris-200 flex items-center justify-center">
+              <span class="text-gris-400">Imagen vaquillonas Senepol</span>
+            </div>
+            <div class="p-6">
+              <h2 class="font-serif text-2xl font-bold text-verde-800 group-hover:text-tierra-600 transition-colors mb-2">
+                Femeninos
+              </h2>
+              <p class="text-gris-600 text-sm mb-4">
+                Vientres y vaquillonas Senepol de alta fertilidad tropical.
+              </p>
+              <span class="inline-flex items-center text-verde-700 font-medium text-sm group-hover:translate-x-1 transition-transform">
+                Ver catálogo
+                <svg class="w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                </svg>
+              </span>
+            </div>
+          </a>
+        </div>
+
+        <!-- Info de raza -->
+        <div class="mt-16 bg-white rounded-xl p-6 md:p-8 shadow-md max-w-4xl mx-auto">
+          <h3 class="font-serif text-xl font-bold text-verde-800 mb-4">Sobre la raza Senepol</h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-sm text-gris-600">
+            <div>
+              <h4 class="font-semibold text-gris-800 mb-2">Características principales</h4>
+              <ul class="space-y-1">
+                <li>• Pelaje rojo/colorado</li>
+                <li>• Pelo corto (slick gene)</li>
+                <li>• Sin cuernos (mocho)</li>
+                <li>• Tolerancia al calor</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="font-semibold text-gris-800 mb-2">Ventajas productivas</h4>
+              <ul class="space-y-1">
+                <li>• Excelente temperamento</li>
+                <li>• Alta fertilidad</li>
+                <li>• Resistencia a parásitos</li>
+                <li>• Buena habilidad materna</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Otras razas -->
+    <section class="py-12 bg-white">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h3 class="text-center font-semibold text-gris-700 mb-6">Ver otras razas</h3>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="/cabana/angus/" class="px-6 py-2 border-2 border-verde-700 text-verde-700 hover:bg-verde-700 hover:text-crema-100 rounded-lg font-medium transition-colors">
+            Angus
+          </a>
+          <a href="/cabana/senangus/" class="px-6 py-2 border-2 border-verde-700 text-verde-700 hover:bg-verde-700 hover:text-crema-100 rounded-lg font-medium transition-colors">
+            Senangus
+          </a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="bg-gris-900 text-crema-200">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div>
+          <div class="flex items-center space-x-3 mb-4">
+            <div class="w-10 h-10 bg-crema-100 rounded-full flex items-center justify-center"><span class="text-verde-800 font-serif font-bold">LM</span></div>
+            <span class="font-serif font-bold text-xl text-crema-100">La Mañanita</span>
+          </div>
+          <p class="text-gris-400 text-sm">Cabaña de cría bovina dedicada a la excelencia genética.</p>
+        </div>
+        <div>
+          <h4 class="text-crema-100 font-semibold mb-4">Navegación</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/" class="text-gris-400 hover:text-tierra-400">Inicio</a></li>
+            <li><a href="/nosotros/" class="text-gris-400 hover:text-tierra-400">Nosotros</a></li>
+            <li><a href="/cabana/" class="text-gris-400 hover:text-tierra-400">Cabaña</a></li>
+            <li><a href="/contacto/" class="text-gris-400 hover:text-tierra-400">Contacto</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-crema-100 font-semibold mb-4">Razas</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="/cabana/angus/" class="text-gris-400 hover:text-tierra-400">Angus</a></li>
+            <li><a href="/cabana/senepol/" class="text-gris-400 hover:text-tierra-400">Senepol</a></li>
+            <li><a href="/cabana/senangus/" class="text-gris-400 hover:text-tierra-400">Senangus</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-crema-100 font-semibold mb-4">Contacto</h4>
+          <p class="text-gris-400 text-sm">contacto@lamananita.com.ar</p>
+        </div>
+      </div>
+    </div>
+    <div class="border-t border-gris-800">
+      <div class="max-w-7xl mx-auto px-4 py-6">
+        <p class="text-gris-500 text-sm text-center">&copy; 2024 Cabaña La Mañanita. Todos los derechos reservados.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script src="/assets/js/main.js"></script>
+</body>
+</html>

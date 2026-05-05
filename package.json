@@ -1,0 +1,13 @@
+{
+  "name": "cabana-la-mananita",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sitio web de Cabaña La Mañanita - Cría de bovinos de excelencia",
+  "scripts": {
+    "dev": "npx serve -l 3000",
+    "start": "npx serve -l 3000"
+  },
+  "devDependencies": {
+    "serve": "^14.2.6"
+  }
+}

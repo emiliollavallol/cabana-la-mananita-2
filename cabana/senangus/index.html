@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Senangus - Cabaña La Mañanita</title>
+    <meta name="description" content="Plantel Senangus de Cabaña La Mañanita. Genética híbrida de excelencia combinando las mejores características de Senepol y Angus.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'verde-oscuro': '#1a3a2f',
+                        'verde-medio': '#2d5a47',
+                        'tierra': '#8b7355',
+                        'tierra-claro': '#a08b6e',
+                        'crema': '#f5f1e8',
+                        'crema-oscuro': '#e8e2d5',
+                        'gris-oscuro': '#2c2c2c',
+                        'gris-medio': '#4a4a4a',
+                    },
+                    fontFamily: {
+                        'heading': ['Georgia', 'Times New Roman', 'serif'],
+                        'body': ['system-ui', '-apple-system', 'Segoe UI', 'Roboto', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .nav-link { position: relative; }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: #8b7355;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after { width: 100%; }
+    </style>
+</head>
+<body class="bg-crema text-gris-oscuro font-body">
+
+    <!-- Header -->
+    <header class="bg-verde-oscuro text-crema sticky top-0 z-50 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16 lg:h-20">
+                <a href="/" class="flex items-center gap-3">
+                    <div class="w-10 h-10 lg:w-12 lg:h-12 bg-tierra rounded-full flex items-center justify-center">
+                        <span class="font-heading font-bold text-lg lg:text-xl">LM</span>
+                    </div>
+                    <div class="hidden sm:block">
+                        <span class="font-heading text-xl lg:text-2xl font-semibold">La Mañanita</span>
+                    </div>
+                </a>
+                <nav class="hidden lg:flex items-center gap-8">
+                    <a href="/" class="nav-link text-crema/90 hover:text-crema transition-colors">Inicio</a>
+                    <a href="/nosotros/" class="nav-link text-crema/90 hover:text-crema transition-colors">Nosotros</a>
+                    <a href="/cabana/" class="nav-link text-crema border-b-2 border-tierra">Cabaña</a>
+                    <a href="/contacto/" class="nav-link text-crema/90 hover:text-crema transition-colors">Contacto</a>
+                </nav>
+                <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md hover:bg-verde-medio transition-colors" aria-label="Abrir menú">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-verde-medio">
+            <nav class="px-4 py-4 space-y-2">
+                <a href="/" class="block py-2 px-4 rounded hover:bg-verde-oscuro transition-colors">Inicio</a>
+                <a href="/nosotros/" class="block py-2 px-4 rounded hover:bg-verde-oscuro transition-colors">Nosotros</a>
+                <a href="/cabana/" class="block py-2 px-4 rounded bg-verde-oscuro">Cabaña</a>
+                <a href="/contacto/" class="block py-2 px-4 rounded hover:bg-verde-oscuro transition-colors">Contacto</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Breadcrumb -->
+        <div class="bg-crema-oscuro border-b border-tierra/20">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+                <nav class="flex items-center gap-2 text-sm text-gris-medio">
+                    <a href="/" class="hover:text-verde-oscuro transition-colors">Inicio</a>
+                    <span>/</span>
+                    <a href="/cabana/" class="hover:text-verde-oscuro transition-colors">Cabaña</a>
+                    <span>/</span>
+                    <span class="text-verde-oscuro font-medium">Senangus</span>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Hero de Raza -->
+        <section class="bg-verde-oscuro text-crema py-16 lg:py-24">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                <h1 class="font-heading text-4xl lg:text-5xl xl:text-6xl font-bold mb-6">
+                    Senangus
+                </h1>
+                <p class="text-lg lg:text-xl text-crema/80 max-w-3xl mx-auto">
+                    El híbrido perfecto que combina la rusticidad tropical del Senepol con la calidad carnicera del Angus. Adaptación y performance en un solo animal.
+                </p>
+            </div>
+        </section>
+
+        <!-- Características -->
+        <section class="py-16 lg:py-20 bg-crema">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-heading text-3xl lg:text-4xl font-bold text-verde-oscuro mb-12 text-center">
+                    Características de la Raza
+                </h2>
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-tierra/10 text-center">
+                        <div class="w-16 h-16 bg-verde-oscuro/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">🧬</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-semibold text-verde-oscuro mb-2">Vigor Híbrido</h3>
+                        <p class="text-gris-medio text-sm">Heterosis que potencia el rendimiento productivo.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-tierra/10 text-center">
+                        <div class="w-16 h-16 bg-verde-oscuro/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">☀️</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-semibold text-verde-oscuro mb-2">Adaptación</h3>
+                        <p class="text-gris-medio text-sm">Tolerancia al calor y resistencia a ectoparásitos.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-tierra/10 text-center">
+                        <div class="w-16 h-16 bg-verde-oscuro/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">🥩</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-semibold text-verde-oscuro mb-2">Calidad Carnicera</h3>
+                        <p class="text-gris-medio text-sm">Marmoleado y terneza heredados del Angus.</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-tierra/10 text-center">
+                        <div class="w-16 h-16 bg-verde-oscuro/10 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <span class="text-3xl">📈</span>
+                        </div>
+                        <h3 class="font-heading text-xl font-semibold text-verde-oscuro mb-2">Eficiencia</h3>
+                        <p class="text-gris-medio text-sm">Excelente conversión alimenticia y ganancia de peso.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categorías -->
+        <section class="py-16 lg:py-20 bg-crema-oscuro">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <h2 class="font-heading text-3xl lg:text-4xl font-bold text-verde-oscuro mb-12 text-center">
+                    Nuestro Plantel
+                </h2>
+                <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                    <a href="/cabana/senangus/masculinos.html" class="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-video bg-verde-oscuro/10 flex items-center justify-center">
+                            <span class="text-6xl opacity-50 group-hover:opacity-70 transition-opacity">♂</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-2xl font-bold text-verde-oscuro mb-2 group-hover:text-verde-medio transition-colors">
+                                Masculinos
+                            </h3>
+                            <p class="text-gris-medio mb-4">Toros y toritos Senangus con genética híbrida superior.</p>
+                            <span class="inline-flex items-center gap-2 text-tierra font-medium">
+                                Ver plantel
+                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+                    <a href="/cabana/senangus/femeninos.html" class="group bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl transition-all duration-300">
+                        <div class="aspect-video bg-verde-oscuro/10 flex items-center justify-center">
+                            <span class="text-6xl opacity-50 group-hover:opacity-70 transition-opacity">♀</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-heading text-2xl font-bold text-verde-oscuro mb-2 group-hover:text-verde-medio transition-colors">
+                                Femeninos
+                            </h3>
+                            <p class="text-gris-medio mb-4">Vacas y vaquillonas Senangus con excelente fertilidad.</p>
+                            <span class="inline-flex items-center gap-2 text-tierra font-medium">
+                                Ver plantel
+                                <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                                </svg>
+                            </span>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gris-oscuro text-crema">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 lg:py-16">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                <div class="lg:col-span-1">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="w-10 h-10 bg-tierra rounded-full flex items-center justify-center">
+                            <span class="font-heading font-bold text-lg">LM</span>
+                        </div>
+                        <span class="font-heading text-xl font-semibold">La Mañanita</span>
+                    </div>
+                    <p class="text-crema/70 text-sm">
+                        Cabaña de cría bovina con más de 30 años de trayectoria en genética de excelencia.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="font-heading text-lg font-semibold mb-4">Navegación</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/" class="text-crema/70 hover:text-crema transition-colors">Inicio</a></li>
+                        <li><a href="/nosotros/" class="text-crema/70 hover:text-crema transition-colors">Nosotros</a></li>
+                        <li><a href="/cabana/" class="text-crema/70 hover:text-crema transition-colors">Cabaña</a></li>
+                        <li><a href="/contacto/" class="text-crema/70 hover:text-crema transition-colors">Contacto</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-heading text-lg font-semibold mb-4">Razas</h4>
+                    <ul class="space-y-2 text-sm">
+                        <li><a href="/cabana/angus/" class="text-crema/70 hover:text-crema transition-colors">Angus</a></li>
+                        <li><a href="/cabana/senepol/" class="text-crema/70 hover:text-crema transition-colors">Senepol</a></li>
+                        <li><a href="/cabana/senangus/" class="text-crema/70 hover:text-crema transition-colors">Senangus</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="font-heading text-lg font-semibold mb-4">Contacto</h4>
+                    <ul class="space-y-2 text-sm text-crema/70">
+                        <li>Ruta Provincial XX, Km XX</li>
+                        <li>Provincia, Argentina</li>
+                        <li class="pt-2">
+                            <a href="mailto:info@lamananita.com.ar" class="hover:text-crema transition-colors">
+                                info@lamananita.com.ar
+                            </a>
+                        </li>
+                        <li>
+                            <a href="tel:+54XXXXXXXXXX" class="hover:text-crema transition-colors">
+                                +54 XXX XXX-XXXX
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-crema/20 mt-12 pt-8 text-center text-sm text-crema/50">
+                <p>&copy; 2024 Cabaña La Mañanita. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="/assets/js/main.js"></script>
+</body>
+</html>
