@@ -82,6 +82,30 @@ const CATALOGO_ANIMALES = [
       aoc: 0.42,                         // Área de ojo de bife
       grasa_dorsal: -0.02,
       marmoleado: 0.35
+    },
+
+    // Evaluaciones genéticas (opcionales)
+    // Breedplan / International Beef Recording Scheme
+    breedplan: {
+      fac_parto_directa: "+2.1",
+      fac_parto_hijas: "+1.4",
+      gestacion: "-2.3",
+      peso_nacer: "-1.2",
+      peso_200: "+28.0",
+      peso_400: "+47.5",
+      peso_600: "+69.1",
+      pva: "+95",
+      leche: "+13.6",
+      ce: "+0.9",
+      dap: "+1.1",
+      carcasa_peso: "+34.8",
+      aob: "+3.1",
+      egd: "-0.3",
+      egc: "-0.2",
+      rendimiento: "+1.0",
+      marmoleo: "+1.5",
+      docilidad: "+18",
+      indice_pampa: "+145"
     }
   },
 
@@ -120,6 +144,22 @@ const CATALOGO_ANIMALES = [
       aoc: 0.38,
       grasa_dorsal: 0.01,
       marmoleado: 0.28
+    },
+
+    // Evaluaciones genéticas (opcionales)
+    // ERA - Evaluación de Reproductores Angus
+    era: {
+      gestacion: "-1.0",
+      pn: "+0.4",
+      destete: "+31.0",
+      final: "+56.2",
+      leche: "+9.0",
+      ce: "+0.5",
+      aob: "+2.5",
+      egd: "-0.1",
+      egc: "-0.1",
+      rendimiento: "+0.8",
+      marmoleo: "+0.9"
     }
   },
 
@@ -164,6 +204,45 @@ const CATALOGO_ANIMALES = [
       aoc: 0.35,
       grasa_dorsal: 0.00,
       marmoleado: 0.30
+    },
+
+    // Evaluaciones genéticas (opcionales)
+    // Breedplan / International Beef Recording Scheme
+    breedplan: {
+      fac_parto_directa: "+3.0",
+      fac_parto_hijas: "+2.2",
+      gestacion: "-3.1",
+      peso_nacer: "-1.9",
+      peso_200: "+24.2",
+      peso_400: "+41.0",
+      peso_600: "+58.4",
+      pva: "+82",
+      leche: "+17.9",
+      ce: null,
+      dap: "+1.8",
+      carcasa_peso: "+28.3",
+      aob: "+2.8",
+      egd: "-0.1",
+      egc: "-0.1",
+      rendimiento: "+0.6",
+      marmoleo: "+1.2",
+      docilidad: "+21",
+      indice_pampa: "+138"
+    },
+
+    // ERA - Evaluación de Reproductores Angus
+    era: {
+      gestacion: "-1.8",
+      pn: "-1.4",
+      destete: "+25.5",
+      final: "+44.9",
+      leche: "+18.2",
+      ce: null,
+      aob: "+2.1",
+      egd: "-0.1",
+      egc: "-0.1",
+      rendimiento: "+0.5",
+      marmoleo: "+1.1"
     }
   },
 
@@ -323,6 +402,30 @@ const CATALOGO_ANIMALES = [
       aoc: 0.40,
       grasa_dorsal: -0.01,
       marmoleado: 0.32
+    },
+
+    // Evaluaciones genéticas (opcionales)
+    // Breedplan / International Beef Recording Scheme
+    breedplan: {
+      fac_parto_directa: "+2.4",
+      fac_parto_hijas: "+1.7",
+      gestacion: "-2.0",
+      peso_nacer: "-1.0",
+      peso_200: "+29.6",
+      peso_400: "+49.4",
+      peso_600: "+70.5",
+      pva: "+101",
+      leche: "+12.1",
+      ce: "+0.8",
+      dap: "+1.3",
+      carcasa_peso: "+36.2",
+      aob: "+3.3",
+      egd: "-0.2",
+      egc: "-0.1",
+      rendimiento: "+1.1",
+      marmoleo: "+1.3",
+      docilidad: "+20",
+      indice_pampa: "+149"
     }
   },
 
