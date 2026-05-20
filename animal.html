@@ -366,6 +366,51 @@
             return `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`;
         }
 
+        /**
+         * Renderiza una sección técnica por esquema (Breedplan / ERA)
+         */
+        function renderizarSeccionEsquema(config, datos) {
+            if (!datos) return '';
+
+            const gruposConDatos = config.grupos
+                .map(grupo => {
+                    const metricas = grupo.metricas
+                        .map(metrica => {
+                            const valor = datos[metrica.key];
+                            if (valor === null || valor === undefined || valor === '') return null;
+                            return `
+                                <div class="p-3 bg-crema rounded-lg text-center">
+                                    <span class="text-gris-medio text-xs block mb-1">${metrica.label}</span>
+                                    <span class="font-bold text-verde-oscuro text-base">${valor}</span>
+                                </div>
+                            `;
+                        })
+                        .filter(Boolean);
+
+                    if (metricas.length === 0) return null;
+
+                    return `
+                        <div class="mb-5 last:mb-0">
+                            <h4 class="text-sm font-semibold text-gris-oscuro mb-3">${grupo.nombre}</h4>
+                            <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+                                ${metricas.join('')}
+                            </div>
+                        </div>
+                    `;
+                })
+                .filter(Boolean);
+
+            if (gruposConDatos.length === 0) return '';
+
+            return `
+                <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
+                    <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-1">${config.titulo}</h2>
+                    <p class="text-xs text-gris-medio mb-4">${config.subtitulo}</p>
+                    ${gruposConDatos.join('')}
+                </div>
+            `;
+        }
+
         // ====================================================================
         // RENDERIZADO
         // ====================================================================
@@ -386,45 +431,110 @@
             // Preparar imágenes
             const todasImagenes = [animal.imagen_principal, ...(animal.imagenes_secundarias || [])];
             
-            // Preparar DEPs si existen
-            let depsHTML = '';
-            if (animal.deps) {
-                const depsItems = [
-                    { label: 'Peso Nac.', value: animal.deps.peso_nacer, unit: '' },
-                    { label: 'Peso Dest.', value: animal.deps.peso_destete, unit: '' },
-                    { label: 'Peso Final', value: animal.deps.peso_final, unit: '' },
-                    { label: 'Leche', value: animal.deps.leche, unit: '' },
-                    { label: 'C.E.', value: animal.deps.circunferencia_escrotal, unit: '' },
-                    { label: 'Docilidad', value: animal.deps.docilidad, unit: '' },
-                    { label: 'AOB', value: animal.deps.aoc, unit: '' },
-                    { label: 'Grasa', value: animal.deps.grasa_dorsal, unit: '' },
-                    { label: 'Marmol.', value: animal.deps.marmoleado, unit: '' }
-                ].filter(item => item.value !== null && item.value !== undefined);
+            const BREEDPLAN_CONFIG = {
+                titulo: 'Breedplan (International Beef Recording Scheme)',
+                subtitulo: 'Valores expresados según el estándar de evaluación genética Breedplan / International Beef Recording Scheme.',
+                grupos: [
+                    {
+                        nombre: 'Facilidad de parto',
+                        metricas: [
+                            { key: 'fac_parto_directa', label: 'Fac. Parto Directa' },
+                            { key: 'fac_parto_hijas', label: 'Fac. Parto Hijas' }
+                        ]
+                    },
+                    {
+                        nombre: 'Nacimiento',
+                        metricas: [
+                            { key: 'gestacion', label: 'Gestación' },
+                            { key: 'peso_nacer', label: 'Peso Nacer' }
+                        ]
+                    },
+                    {
+                        nombre: 'Desarrollo',
+                        metricas: [
+                            { key: 'peso_200', label: 'Peso 200' },
+                            { key: 'peso_400', label: 'Peso 400' },
+                            { key: 'peso_600', label: 'Peso 600' },
+                            { key: 'pva', label: 'PVA' }
+                        ]
+                    },
+                    {
+                        nombre: 'Fertilidad',
+                        metricas: [
+                            { key: 'leche', label: 'Leche' },
+                            { key: 'ce', label: 'CE' },
+                            { key: 'dap', label: 'DAP' }
+                        ]
+                    },
+                    {
+                        nombre: 'Carcasa',
+                        metricas: [
+                            { key: 'carcasa_peso', label: 'Peso Carcasa' },
+                            { key: 'aob', label: 'AOB' },
+                            { key: 'egd', label: 'EGD' },
+                            { key: 'egc', label: 'EGC' },
+                            { key: 'rendimiento', label: 'Rendimiento' },
+                            { key: 'marmoleo', label: 'Marmoleo' }
+                        ]
+                    },
+                    {
+                        nombre: 'Docilidad / Índices',
+                        metricas: [
+                            { key: 'docilidad', label: 'Docilidad' },
+                            { key: 'indice_pampa', label: 'Índice Pampa' }
+                        ]
+                    }
+                ]
+            };
 
-                if (depsItems.length > 0) {
-                    depsHTML = `
-                        <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
-                            <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-4 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-tierra" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                                DEPs (Diferencias Esperadas en la Progenie)
-                            </h2>
-                            <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-center text-sm">
-                                ${depsItems.map(item => `
-                                    <div class="p-3 bg-crema rounded-lg">
-                                        <span class="text-gris-medio text-xs block mb-1">${item.label}</span>
-                                        <span class="font-bold text-verde-oscuro text-lg">${item.value > 0 ? '+' : ''}${item.value}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <p class="text-xs text-gris-medio mt-4 text-center">
-                                Valores expresados en las unidades estándar de cada evaluación genética.
-                            </p>
-                        </div>
-                    `;
-                }
-            }
+            const ERA_CONFIG = {
+                titulo: 'ERA (Evaluación de Reproductores Angus)',
+                subtitulo: 'Valores expresados según el estándar de Evaluación de Reproductores Angus (ERA).',
+                grupos: [
+                    {
+                        nombre: 'Nacimiento',
+                        metricas: [
+                            { key: 'gestacion', label: 'Gestación' },
+                            { key: 'pn', label: 'PN' }
+                        ]
+                    },
+                    {
+                        nombre: 'Desarrollo',
+                        metricas: [
+                            { key: 'destete', label: 'Destete' },
+                            { key: 'final', label: 'Final' }
+                        ]
+                    },
+                    {
+                        nombre: 'Fertilidad',
+                        metricas: [
+                            { key: 'leche', label: 'Leche' },
+                            { key: 'ce', label: 'CE' }
+                        ]
+                    },
+                    {
+                        nombre: 'Carcasa',
+                        metricas: [
+                            { key: 'aob', label: 'AOB' },
+                            { key: 'egd', label: 'EGD' },
+                            { key: 'egc', label: 'EGC' },
+                            { key: 'rendimiento', label: 'Rendimiento' },
+                            { key: 'marmoleo', label: 'Marmoleo' }
+                        ]
+                    }
+                ]
+            };
+
+            const breedplanHTML = renderizarSeccionEsquema(BREEDPLAN_CONFIG, animal.breedplan);
+            const eraHTML = renderizarSeccionEsquema(ERA_CONFIG, animal.era);
+            const infoGeneticaHTML = (breedplanHTML || eraHTML)
+                ? `${breedplanHTML}${eraHTML}`
+                : `
+                    <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
+                        <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-2">Información genética</h2>
+                        <p class="text-sm text-gris-medio">Información genética no disponible.</p>
+                    </div>
+                `;
 
             // Renderizar ficha completa
             const content = document.getElementById('animal-content');
@@ -564,58 +674,7 @@
                                     </div>
                                 </div>
 
-                                <!-- Datos técnicos -->
-                                ${animal.datos_tecnicos ? `
-                                    <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
-                                        <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-4 flex items-center gap-2">
-                                            <svg class="w-5 h-5 text-tierra" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                                            </svg>
-                                            Datos Técnicos
-                                        </h2>
-                                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-                                            ${animal.datos_tecnicos.peso_actual ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Peso Actual</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.peso_actual}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.frame ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Frame</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.frame}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.facilidad_parto ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Fac. Parto</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.facilidad_parto}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.circunferencia_escrotal ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Circ. Escrotal</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.circunferencia_escrotal}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.peso_destete ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Peso Destete</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.peso_destete}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.adn ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">ADN</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.adn}</span>
-                                                </div>
-                                            ` : ''}
-                                        </div>
-                                    </div>
-                                ` : ''}
-
-                                <!-- DEPs -->
-                                ${depsHTML}
+                                ${infoGeneticaHTML}
 
                                 <!-- CTAs -->
                                 <div class="flex flex-col sm:flex-row gap-3">
