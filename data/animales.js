@@ -18,6 +18,8 @@
  * - categoria: "toro" | "torito" | "vaca" | "vaquillona" | "ternero" | "ternera"
  * - estado: "disponible" | "reservado" | "vendido" | "propio"
  * - destacado: true | false
+ * - breedplan / era: objetos opcionales de evaluación genética
+ *   Cada métrica usa: { valor: "...", precision: "...", top: "..." }
  * 
  * ============================================================================
  */
@@ -87,25 +89,25 @@ const CATALOGO_ANIMALES = [
     // Evaluaciones genéticas (opcionales)
     // Breedplan / International Beef Recording Scheme
     breedplan: {
-      fac_parto_directa: "+2.1",
-      fac_parto_hijas: "+1.4",
-      gestacion: "-2.3",
-      peso_nacer: "-1.2",
-      peso_200: "+28.0",
-      peso_400: "+47.5",
-      peso_600: "+69.1",
-      pva: "+95",
-      leche: "+13.6",
-      ce: "+0.9",
-      dap: "+1.1",
-      carcasa_peso: "+34.8",
-      aob: "+3.1",
-      egd: "-0.3",
-      egc: "-0.2",
-      rendimiento: "+1.0",
-      marmoleo: "+1.5",
-      docilidad: "+18",
-      indice_pampa: "+145"
+      fac_parto_directa: { valor: "+2.1", precision: "72%", top: "10%" },
+      fac_parto_hijas: { valor: "+1.4", precision: "68%", top: "15%" },
+      gestacion: { valor: "-2.3", precision: "76%", top: "8%" },
+      peso_nacer: { valor: "-1.2", precision: "78%", top: "12%" },
+      peso_200_dias: { valor: "+28.0", precision: "74%", top: "10%" },
+      peso_400_dias: { valor: "+47.5", precision: "70%", top: "12%" },
+      peso_600_dias: { valor: "+69.1", precision: "66%", top: "15%" },
+      peso_vaca_adulta: { valor: "+95", precision: "58%", top: "20%" },
+      leche: { valor: "+13.6", precision: "62%", top: "18%" },
+      circunferencia_escrotal: { valor: "+0.9", precision: "69%", top: "12%" },
+      dias_al_parto: { valor: "+1.1", precision: "55%", top: "35%" },
+      peso_carcasa: { valor: "+34.8", precision: "63%", top: "10%" },
+      area_ojo_bife: { valor: "+3.1", precision: "60%", top: "8%" },
+      espesor_grasa_dorsal: { valor: "-0.3", precision: "58%", top: "20%" },
+      espesor_grasa_cadera: { valor: "-0.2", precision: "57%", top: "22%" },
+      rendimiento_carcasa: { valor: "+1.0", precision: "59%", top: "12%" },
+      marmoleo: { valor: "+1.5", precision: "56%", top: "10%" },
+      docilidad: { valor: "+18", precision: "64%", top: "15%" },
+      indice_pampa: { valor: "+145", precision: "70%", top: "5%" }
     }
   },
 
@@ -149,17 +151,17 @@ const CATALOGO_ANIMALES = [
     // Evaluaciones genéticas (opcionales)
     // ERA - Evaluación de Reproductores Angus
     era: {
-      gestacion: "-1.0",
-      pn: "+0.4",
-      destete: "+31.0",
-      final: "+56.2",
-      leche: "+9.0",
-      ce: "+0.5",
-      aob: "+2.5",
-      egd: "-0.1",
-      egc: "-0.1",
-      rendimiento: "+0.8",
-      marmoleo: "+0.9"
+      gestacion: { valor: "-1.0", precision: "68%", top: "20%" },
+      peso_nacer: { valor: "+0.4", precision: "72%", top: "45%" },
+      peso_destete: { valor: "+31.0", precision: "70%", top: "12%" },
+      peso_final: { valor: "+56.2", precision: "66%", top: "10%" },
+      leche: { valor: "+9.0", precision: "60%", top: "35%" },
+      circunferencia_escrotal: { valor: "+0.5", precision: "64%", top: "20%" },
+      area_ojo_bife: { valor: "+2.5", precision: "58%", top: "15%" },
+      espesor_grasa_dorsal: { valor: "-0.1", precision: "55%", top: "30%" },
+      espesor_grasa_cadera: { valor: "-0.1", precision: "54%", top: "30%" },
+      rendimiento_carcasa: { valor: "+0.8", precision: "57%", top: "18%" },
+      marmoleo: { valor: "+0.9", precision: "52%", top: "20%" }
     }
   },
 
@@ -209,40 +211,40 @@ const CATALOGO_ANIMALES = [
     // Evaluaciones genéticas (opcionales)
     // Breedplan / International Beef Recording Scheme
     breedplan: {
-      fac_parto_directa: "+3.0",
-      fac_parto_hijas: "+2.2",
-      gestacion: "-3.1",
-      peso_nacer: "-1.9",
-      peso_200: "+24.2",
-      peso_400: "+41.0",
-      peso_600: "+58.4",
-      pva: "+82",
-      leche: "+17.9",
-      ce: null,
-      dap: "+1.8",
-      carcasa_peso: "+28.3",
-      aob: "+2.8",
-      egd: "-0.1",
-      egc: "-0.1",
-      rendimiento: "+0.6",
-      marmoleo: "+1.2",
-      docilidad: "+21",
-      indice_pampa: "+138"
+      fac_parto_directa: { valor: "+3.0", precision: "75%", top: "5%" },
+      fac_parto_hijas: { valor: "+2.2", precision: "70%", top: "8%" },
+      gestacion: { valor: "-3.1", precision: "78%", top: "4%" },
+      peso_nacer: { valor: "-1.9", precision: "80%", top: "6%" },
+      peso_200_dias: { valor: "+24.2", precision: "71%", top: "18%" },
+      peso_400_dias: { valor: "+41.0", precision: "68%", top: "22%" },
+      peso_600_dias: { valor: "+58.4", precision: "63%", top: "25%" },
+      peso_vaca_adulta: { valor: "+82", precision: "54%", top: "30%" },
+      leche: { valor: "+17.9", precision: "66%", top: "6%" },
+      circunferencia_escrotal: { valor: null, precision: null, top: null },
+      dias_al_parto: { valor: "+1.8", precision: "52%", top: "40%" },
+      peso_carcasa: { valor: "+28.3", precision: "61%", top: "22%" },
+      area_ojo_bife: { valor: "+2.8", precision: "59%", top: "12%" },
+      espesor_grasa_dorsal: { valor: "-0.1", precision: "56%", top: "35%" },
+      espesor_grasa_cadera: { valor: "-0.1", precision: "55%", top: "35%" },
+      rendimiento_carcasa: { valor: "+0.6", precision: "58%", top: "25%" },
+      marmoleo: { valor: "+1.2", precision: "54%", top: "15%" },
+      docilidad: { valor: "+21", precision: "67%", top: "8%" },
+      indice_pampa: { valor: "+138", precision: "68%", top: "8%" }
     },
 
     // ERA - Evaluación de Reproductores Angus
     era: {
-      gestacion: "-1.8",
-      pn: "-1.4",
-      destete: "+25.5",
-      final: "+44.9",
-      leche: "+18.2",
-      ce: null,
-      aob: "+2.1",
-      egd: "-0.1",
-      egc: "-0.1",
-      rendimiento: "+0.5",
-      marmoleo: "+1.1"
+      gestacion: { valor: "-1.8", precision: "74%", top: "10%" },
+      peso_nacer: { valor: "-1.4", precision: "78%", top: "8%" },
+      peso_destete: { valor: "+25.5", precision: "72%", top: "20%" },
+      peso_final: { valor: "+44.9", precision: "68%", top: "24%" },
+      leche: { valor: "+18.2", precision: "66%", top: "5%" },
+      circunferencia_escrotal: { valor: null, precision: null, top: null },
+      area_ojo_bife: { valor: "+2.1", precision: "59%", top: "18%" },
+      espesor_grasa_dorsal: { valor: "-0.1", precision: "55%", top: "30%" },
+      espesor_grasa_cadera: { valor: "-0.1", precision: "54%", top: "30%" },
+      rendimiento_carcasa: { valor: "+0.5", precision: "57%", top: "28%" },
+      marmoleo: { valor: "+1.1", precision: "53%", top: "15%" }
     }
   },
 
@@ -407,25 +409,25 @@ const CATALOGO_ANIMALES = [
     // Evaluaciones genéticas (opcionales)
     // Breedplan / International Beef Recording Scheme
     breedplan: {
-      fac_parto_directa: "+2.4",
-      fac_parto_hijas: "+1.7",
-      gestacion: "-2.0",
-      peso_nacer: "-1.0",
-      peso_200: "+29.6",
-      peso_400: "+49.4",
-      peso_600: "+70.5",
-      pva: "+101",
-      leche: "+12.1",
-      ce: "+0.8",
-      dap: "+1.3",
-      carcasa_peso: "+36.2",
-      aob: "+3.3",
-      egd: "-0.2",
-      egc: "-0.1",
-      rendimiento: "+1.1",
-      marmoleo: "+1.3",
-      docilidad: "+20",
-      indice_pampa: "+149"
+      fac_parto_directa: { valor: "+2.4", precision: "70%", top: "9%" },
+      fac_parto_hijas: { valor: "+1.7", precision: "65%", top: "12%" },
+      gestacion: { valor: "-2.0", precision: "73%", top: "12%" },
+      peso_nacer: { valor: "-1.0", precision: "76%", top: "15%" },
+      peso_200_dias: { valor: "+29.6", precision: "72%", top: "8%" },
+      peso_400_dias: { valor: "+49.4", precision: "68%", top: "10%" },
+      peso_600_dias: { valor: "+70.5", precision: "64%", top: "14%" },
+      peso_vaca_adulta: { valor: "+101", precision: "55%", top: "18%" },
+      leche: { valor: "+12.1", precision: "60%", top: "22%" },
+      circunferencia_escrotal: { valor: "+0.8", precision: "66%", top: "15%" },
+      dias_al_parto: { valor: "+1.3", precision: "50%", top: "35%" },
+      peso_carcasa: { valor: "+36.2", precision: "61%", top: "8%" },
+      area_ojo_bife: { valor: "+3.3", precision: "58%", top: "7%" },
+      espesor_grasa_dorsal: { valor: "-0.2", precision: "55%", top: "25%" },
+      espesor_grasa_cadera: { valor: "-0.1", precision: "54%", top: "30%" },
+      rendimiento_carcasa: { valor: "+1.1", precision: "57%", top: "10%" },
+      marmoleo: { valor: "+1.3", precision: "53%", top: "12%" },
+      docilidad: { valor: "+20", precision: "62%", top: "10%" },
+      indice_pampa: { valor: "+149", precision: "67%", top: "4%" }
     }
   },
 
