@@ -11,7 +11,7 @@
             theme: {
                 extend: {
                     colors: {
-                        'verde-oscuro': '#1a3a2f',
+                        'verde-oscuro': '#1B1B1B',
                         'verde-medio': '#2d5a47',
                         'tierra': '#8b7355',
                         'tierra-claro': '#a08b6e',
@@ -353,7 +353,7 @@
          * Genera SVG placeholder para imágenes
          */
         function imagenPlaceholder() {
-            return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%231a3a2f' width='400' height='300' opacity='0.1'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%231a3a2f' opacity='0.3' font-family='Georgia' font-size='16'%3EImagen no disponible%3C/text%3E%3C/svg%3E`;
+            return `data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='300' viewBox='0 0 400 300'%3E%3Crect fill='%231B1B1B' width='400' height='300' opacity='0.1'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='%231B1B1B' opacity='0.3' font-family='Georgia' font-size='16'%3EImagen no disponible%3C/text%3E%3C/svg%3E`;
         }
 
         /**
@@ -364,6 +364,121 @@
                 `Hola, quiero consultar por el ejemplar ${animal.nombre} - RP ${animal.rp} de La Mañanita.`
             );
             return `https://wa.me/${WHATSAPP_NUMBER}?text=${mensaje}`;
+        }
+
+        /**
+         * Normaliza una métrica genética para soportar valor, precisión y TOP.
+         */
+        function normalizarMetricaGenetica(metrica) {
+            if (metrica && typeof metrica === 'object' && !Array.isArray(metrica)) {
+                return {
+                    valor: metrica.valor ?? null,
+                    precision: metrica.precision ?? null,
+                    top: metrica.top ?? null
+                };
+            }
+
+            return {
+                valor: metrica ?? null,
+                precision: null,
+                top: null
+            };
+        }
+
+        /**
+         * Renderiza una tabla técnica por esquema (Breedplan / ERA)
+         */
+        function renderizarSeccionEsquema(config, datos) {
+            if (!datos) return '';
+
+            const metricas = config.grupos.flatMap(grupo =>
+                grupo.metricas.map(metrica => ({ ...metrica, grupo: grupo.nombre }))
+            );
+
+            const tieneDatos = metricas.some(metrica => {
+                const normalizada = normalizarMetricaGenetica(datos[metrica.key]);
+                return normalizada.valor !== null && normalizada.valor !== undefined && normalizada.valor !== '';
+            });
+
+            if (!tieneDatos) return '';
+
+            const gruposHeader = config.grupos.map(grupo => `
+                <th colspan="${grupo.metricas.length}" class="px-3 py-2 bg-verde-oscuro text-crema text-xs uppercase tracking-wide border border-tierra/20 whitespace-nowrap">
+                    ${grupo.nombre}
+                </th>
+            `).join('');
+
+            const metricasHeader = metricas.map(metrica => `
+                <th class="px-3 py-3 bg-crema-oscuro text-verde-oscuro text-xs font-semibold border border-tierra/20 whitespace-nowrap min-w-[92px]">
+                    <span class="block">${metrica.label}</span>
+                </th>
+            `).join('');
+
+            const valoresRow = metricas.map(metrica => {
+                const normalizada = normalizarMetricaGenetica(datos[metrica.key]);
+                const valor = normalizada.valor === null || normalizada.valor === undefined || normalizada.valor === '' ? '—' : normalizada.valor;
+                return `
+                    <td class="px-3 py-3 text-center border border-tierra/20 bg-white min-w-[92px]">
+                        <span class="block font-bold text-verde-oscuro text-base leading-tight">${valor}</span>
+                        ${normalizada.precision ? `<span class="block text-[11px] text-gris-medio mt-1">Prec. ${normalizada.precision}</span>` : ''}
+                    </td>
+                `;
+            }).join('');
+
+            const topRow = metricas.map(metrica => {
+                const normalizada = normalizarMetricaGenetica(datos[metrica.key]);
+                const top = normalizada.top === null || normalizada.top === undefined || normalizada.top === '' ? '—' : normalizada.top;
+                return `
+                    <td class="px-3 py-2 text-center border border-tierra/20 bg-crema text-xs font-semibold text-gris-medio min-w-[92px]">
+                        ${top}
+                    </td>
+                `;
+            }).join('');
+
+            return `
+                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-tierra/10 mb-6">
+                    <div class="flex flex-col lg:flex-row gap-5 lg:items-start">
+                        <div class="lg:w-40 lg:flex-shrink-0">
+                            <!-- Logo definitivo esperado: ${config.logoSrc} -->
+                            <div class="w-28 h-20 lg:w-32 lg:h-24 bg-crema rounded-lg border border-tierra/20 flex items-center justify-center overflow-hidden mb-3 lg:mb-0">
+                                <img src="${config.logoSrc}" alt="${config.logoAlt}" class="max-w-full max-h-full object-contain p-2" onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');">
+                                <span class="hidden text-[11px] text-gris-medio text-center px-2 leading-tight">Logo pendiente</span>
+                            </div>
+                        </div>
+                        <div class="min-w-0 flex-1">
+                            <div class="mb-4">
+                                <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-1">${config.titulo}</h2>
+                                <p class="text-xs text-gris-medio">${config.subtitulo}</p>
+                                <p class="text-[11px] text-gris-medio mt-2 lg:hidden">Deslizá horizontalmente para ver todos los indicadores →</p>
+                            </div>
+                            <div class="overflow-x-auto border border-tierra/20 rounded-lg">
+                                <table class="w-full min-w-[980px] border-collapse text-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="px-3 py-2 bg-verde-oscuro text-crema text-xs uppercase tracking-wide border border-tierra/20 text-left min-w-[92px]">Grupo</th>
+                                            ${gruposHeader}
+                                        </tr>
+                                        <tr>
+                                            <th class="px-3 py-3 bg-crema-oscuro text-verde-oscuro text-xs font-semibold border border-tierra/20 text-left whitespace-nowrap">Indicador</th>
+                                            ${metricasHeader}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <th class="px-3 py-3 bg-crema-oscuro text-verde-oscuro text-xs font-semibold border border-tierra/20 text-left whitespace-nowrap">Valor</th>
+                                            ${valoresRow}
+                                        </tr>
+                                        <tr>
+                                            <th class="px-3 py-2 bg-crema text-gris-medio text-xs font-semibold border border-tierra/20 text-left whitespace-nowrap">TOP</th>
+                                            ${topRow}
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `;
         }
 
         // ====================================================================
@@ -386,45 +501,114 @@
             // Preparar imágenes
             const todasImagenes = [animal.imagen_principal, ...(animal.imagenes_secundarias || [])];
             
-            // Preparar DEPs si existen
-            let depsHTML = '';
-            if (animal.deps) {
-                const depsItems = [
-                    { label: 'Peso Nac.', value: animal.deps.peso_nacer, unit: '' },
-                    { label: 'Peso Dest.', value: animal.deps.peso_destete, unit: '' },
-                    { label: 'Peso Final', value: animal.deps.peso_final, unit: '' },
-                    { label: 'Leche', value: animal.deps.leche, unit: '' },
-                    { label: 'C.E.', value: animal.deps.circunferencia_escrotal, unit: '' },
-                    { label: 'Docilidad', value: animal.deps.docilidad, unit: '' },
-                    { label: 'AOB', value: animal.deps.aoc, unit: '' },
-                    { label: 'Grasa', value: animal.deps.grasa_dorsal, unit: '' },
-                    { label: 'Marmol.', value: animal.deps.marmoleado, unit: '' }
-                ].filter(item => item.value !== null && item.value !== undefined);
+            const BREEDPLAN_CONFIG = {
+                titulo: 'Breedplan (International Beef Recording Scheme)',
+                subtitulo: 'Valores expresados según el estándar de evaluación genética Breedplan / International Beef Recording Scheme.',
+                logoSrc: '/assets/img/evaluaciones/logo-breedplan.png',
+                logoAlt: 'International Beef Recording Scheme - Breedplan',
+                grupos: [
+                    {
+                        nombre: 'Facilidad de parto',
+                        metricas: [
+                            { key: 'fac_parto_directa', label: 'Dir.' },
+                            { key: 'fac_parto_hijas', label: 'Hijas' }
+                        ]
+                    },
+                    {
+                        nombre: 'Nacimiento',
+                        metricas: [
+                            { key: 'gestacion', label: 'Gest.' },
+                            { key: 'peso_nacer', label: 'Peso' }
+                        ]
+                    },
+                    {
+                        nombre: 'Desarrollo',
+                        metricas: [
+                            { key: 'peso_200_dias', label: '200' },
+                            { key: 'peso_400_dias', label: '400' },
+                            { key: 'peso_600_dias', label: '600' },
+                            { key: 'peso_vaca_adulta', label: 'PVA' },
+                            { key: 'leche', label: 'Leche' }
+                        ]
+                    },
+                    {
+                        nombre: 'Fertilidad',
+                        metricas: [
+                            { key: 'circunferencia_escrotal', label: 'C.E.' },
+                            { key: 'dias_al_parto', label: 'DAP' }
+                        ]
+                    },
+                    {
+                        nombre: 'Carcasa',
+                        metricas: [
+                            { key: 'peso_carcasa', label: 'Peso' },
+                            { key: 'area_ojo_bife', label: 'AOB' },
+                            { key: 'espesor_grasa_dorsal', label: 'EGD' },
+                            { key: 'espesor_grasa_cadera', label: 'EGC' },
+                            { key: 'rendimiento_carcasa', label: 'Rend.' },
+                            { key: 'marmoleo', label: 'Marb.' }
+                        ]
+                    },
+                    {
+                        nombre: 'Docilidad / Índices',
+                        metricas: [
+                            { key: 'docilidad', label: 'Docilidad' },
+                            { key: 'indice_pampa', label: 'Índice Pampa' }
+                        ]
+                    }
+                ]
+            };
 
-                if (depsItems.length > 0) {
-                    depsHTML = `
-                        <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
-                            <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-4 flex items-center gap-2">
-                                <svg class="w-5 h-5 text-tierra" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
-                                </svg>
-                                DEPs (Diferencias Esperadas en la Progenie)
-                            </h2>
-                            <div class="grid grid-cols-3 sm:grid-cols-4 lg:grid-cols-5 gap-3 text-center text-sm">
-                                ${depsItems.map(item => `
-                                    <div class="p-3 bg-crema rounded-lg">
-                                        <span class="text-gris-medio text-xs block mb-1">${item.label}</span>
-                                        <span class="font-bold text-verde-oscuro text-lg">${item.value > 0 ? '+' : ''}${item.value}</span>
-                                    </div>
-                                `).join('')}
-                            </div>
-                            <p class="text-xs text-gris-medio mt-4 text-center">
-                                Valores expresados en las unidades estándar de cada evaluación genética.
-                            </p>
-                        </div>
-                    `;
-                }
-            }
+            const ERA_CONFIG = {
+                titulo: 'ERA (Evaluación de Reproductores Angus)',
+                subtitulo: 'Valores expresados según el estándar de Evaluación de Reproductores Angus (ERA).',
+                logoSrc: '/assets/img/evaluaciones/logo-era-angus.png',
+                logoAlt: 'ERA Angus - Evaluación de Reproductores Angus',
+                grupos: [
+                    {
+                        nombre: 'Nacimiento',
+                        metricas: [
+                            { key: 'gestacion', label: 'Gest.' },
+                            { key: 'peso_nacer', label: 'P.N.' }
+                        ]
+                    },
+                    {
+                        nombre: 'Desarrollo',
+                        metricas: [
+                            { key: 'peso_destete', label: 'Dest.' },
+                            { key: 'peso_final', label: 'Final' },
+                            { key: 'leche', label: 'Leche' }
+                        ]
+                    },
+                    {
+                        nombre: 'Fertilidad',
+                        metricas: [
+                            { key: 'circunferencia_escrotal', label: 'C.E.' }
+                        ]
+                    },
+                    {
+                        nombre: 'Carcasa',
+                        metricas: [
+                            { key: 'area_ojo_bife', label: 'AOB' },
+                            { key: 'espesor_grasa_dorsal', label: 'EGD' },
+                            { key: 'espesor_grasa_cadera', label: 'EGC' },
+                            { key: 'rendimiento_carcasa', label: 'Rend.' },
+                            { key: 'marmoleo', label: 'Marb.' }
+                        ]
+                    }
+                ]
+            };
+
+            const breedplanHTML = renderizarSeccionEsquema(BREEDPLAN_CONFIG, animal.breedplan);
+            const eraHTML = renderizarSeccionEsquema(ERA_CONFIG, animal.era);
+            const infoGeneticaHTML = (breedplanHTML || eraHTML)
+                ? `${breedplanHTML}${eraHTML}`
+                : `
+                    <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
+                        <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-2">Información genética</h2>
+                        <p class="text-sm text-gris-medio">Información genética no disponible.</p>
+                    </div>
+                `;
 
             // Renderizar ficha completa
             const content = document.getElementById('animal-content');
@@ -564,59 +748,6 @@
                                     </div>
                                 </div>
 
-                                <!-- Datos técnicos -->
-                                ${animal.datos_tecnicos ? `
-                                    <div class="bg-white rounded-xl p-6 shadow-sm border border-tierra/10 mb-6">
-                                        <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-4 flex items-center gap-2">
-                                            <svg class="w-5 h-5 text-tierra" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"/>
-                                            </svg>
-                                            Datos Técnicos
-                                        </h2>
-                                        <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-sm">
-                                            ${animal.datos_tecnicos.peso_actual ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Peso Actual</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.peso_actual}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.frame ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Frame</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.frame}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.facilidad_parto ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Fac. Parto</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.facilidad_parto}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.circunferencia_escrotal ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Circ. Escrotal</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.circunferencia_escrotal}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.peso_destete ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">Peso Destete</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.peso_destete}</span>
-                                                </div>
-                                            ` : ''}
-                                            ${animal.datos_tecnicos.adn ? `
-                                                <div class="p-3 bg-crema rounded-lg text-center">
-                                                    <span class="text-gris-medio text-xs block mb-1">ADN</span>
-                                                    <span class="font-bold text-verde-oscuro text-lg">${animal.datos_tecnicos.adn}</span>
-                                                </div>
-                                            ` : ''}
-                                        </div>
-                                    </div>
-                                ` : ''}
-
-                                <!-- DEPs -->
-                                ${depsHTML}
-
                                 <!-- CTAs -->
                                 <div class="flex flex-col sm:flex-row gap-3">
                                     ${animal.estado === 'disponible' || animal.estado === 'reservado' ? `
@@ -643,6 +774,11 @@
                                     </a>
                                 </div>
                             </div>
+                        </div>
+
+                        <!-- Evaluaciones genéticas a ancho completo -->
+                        <div class="mt-8">
+                            ${infoGeneticaHTML}
                         </div>
                     </div>
                 </section>
