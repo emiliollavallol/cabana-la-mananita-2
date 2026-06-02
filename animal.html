@@ -367,117 +367,193 @@
         }
 
         /**
-         * Normaliza una métrica genética para soportar valor, precisión y TOP.
+         * Renderiza una tabla técnica por esquema de evaluación genética.
+         * Compatible con métricas completas:
+         * { valor, precision, top }
+         *
+         * También admite temporalmente valores simples para no romper datos antiguos.
          */
-        function normalizarMetricaGenetica(metrica) {
-            if (metrica && typeof metrica === 'object' && !Array.isArray(metrica)) {
+        function renderizarSeccionEsquema(config, datos) {
+            if (!datos) return '';
+
+            /**
+             * Normaliza métricas nuevas y antiguas.
+             * Formato recomendado:
+             * {
+             *   valor: "+34",
+             *   precision: "71%",
+             *   top: "5%"
+             * }
+             */
+            function normalizarMetrica(metrica) {
+                if (metrica === null || metrica === undefined || metrica === '') {
+                    return {
+                        valor: '—',
+                        precision: null,
+                        top: null
+                    };
+                }
+
+                // Compatibilidad temporal con datos antiguos:
+                // peso_200_dias: "+34"
+                if (typeof metrica !== 'object') {
+                    return {
+                        valor: metrica,
+                        precision: null,
+                        top: null
+                    };
+                }
+
                 return {
-                    valor: metrica.valor ?? null,
+                    valor: metrica.valor ?? '—',
                     precision: metrica.precision ?? null,
                     top: metrica.top ?? null
                 };
             }
 
-            return {
-                valor: metrica ?? null,
-                precision: null,
-                top: null
-            };
-        }
+            /**
+             * Genera placeholder sobrio cuando todavía no se cargó el logo.
+             */
+            function manejarErrorLogo(img) {
+                img.style.display = 'none';
+                const placeholder = img.nextElementSibling;
 
-        /**
-         * Renderiza una tabla técnica por esquema (Breedplan / ERA)
-         */
-        function renderizarSeccionEsquema(config, datos) {
-            if (!datos) return '';
+                if (placeholder) {
+                    placeholder.classList.remove('hidden');
+                }
+            }
 
-            const metricas = config.grupos.flatMap(grupo =>
-                grupo.metricas.map(metrica => ({ ...metrica, grupo: grupo.nombre }))
+            // Exponer función para que pueda utilizarse desde onerror.
+            window.manejarErrorLogo = manejarErrorLogo;
+
+            const grupos = config.grupos || [];
+
+            const cantidadMetricas = grupos.reduce(
+                (total, grupo) => total + grupo.metricas.length,
+                0
             );
 
-            const tieneDatos = metricas.some(metrica => {
-                const normalizada = normalizarMetricaGenetica(datos[metrica.key]);
-                return normalizada.valor !== null && normalizada.valor !== undefined && normalizada.valor !== '';
-            });
+            if (cantidadMetricas === 0) return '';
 
-            if (!tieneDatos) return '';
-
-            const gruposHeader = config.grupos.map(grupo => `
-                <th colspan="${grupo.metricas.length}" class="px-3 py-2 bg-verde-oscuro text-crema text-xs uppercase tracking-wide border border-tierra/20 whitespace-nowrap">
+            const categoriasHTML = grupos.map(grupo => `
+                <th
+                    colspan="${grupo.metricas.length}"
+                    class="border border-tierra/30 bg-verde-oscuro/10 px-3 py-2 text-center text-xs font-bold uppercase tracking-wide text-verde-oscuro whitespace-nowrap"
+                >
                     ${grupo.nombre}
                 </th>
             `).join('');
 
-            const metricasHeader = metricas.map(metrica => `
-                <th class="px-3 py-3 bg-crema-oscuro text-verde-oscuro text-xs font-semibold border border-tierra/20 whitespace-nowrap min-w-[92px]">
-                    <span class="block">${metrica.label}</span>
-                </th>
-            `).join('');
+            const encabezadosHTML = grupos.flatMap(grupo =>
+                grupo.metricas.map(metrica => `
+                    <th
+                        class="border border-tierra/30 bg-crema-oscuro px-3 py-2 text-center text-xs font-semibold text-gris-oscuro whitespace-nowrap"
+                    >
+                        ${metrica.label}
+                    </th>
+                `)
+            ).join('');
 
-            const valoresRow = metricas.map(metrica => {
-                const normalizada = normalizarMetricaGenetica(datos[metrica.key]);
-                const valor = normalizada.valor === null || normalizada.valor === undefined || normalizada.valor === '' ? '—' : normalizada.valor;
-                return `
-                    <td class="px-3 py-3 text-center border border-tierra/20 bg-white min-w-[92px]">
-                        <span class="block font-bold text-verde-oscuro text-base leading-tight">${valor}</span>
-                        ${normalizada.precision ? `<span class="block text-[11px] text-gris-medio mt-1">Prec. ${normalizada.precision}</span>` : ''}
-                    </td>
-                `;
-            }).join('');
+            const valoresHTML = grupos.flatMap(grupo =>
+                grupo.metricas.map(metrica => {
+                    const dato = normalizarMetrica(datos[metrica.key]);
 
-            const topRow = metricas.map(metrica => {
-                const normalizada = normalizarMetricaGenetica(datos[metrica.key]);
-                const top = normalizada.top === null || normalizada.top === undefined || normalizada.top === '' ? '—' : normalizada.top;
-                return `
-                    <td class="px-3 py-2 text-center border border-tierra/20 bg-crema text-xs font-semibold text-gris-medio min-w-[92px]">
-                        ${top}
-                    </td>
-                `;
-            }).join('');
+                    return `
+                        <td class="border border-tierra/30 bg-white px-3 py-3 text-center whitespace-nowrap">
+                            <span class="block text-base font-bold text-verde-oscuro">
+                                ${dato.valor}
+                            </span>
+
+                            ${dato.precision ? `
+                                <span class="mt-1 block text-xs italic text-gris-medio">
+                                    ${dato.precision}
+                                </span>
+                            ` : `
+                                <span class="mt-1 block text-xs italic text-gris-medio">
+                                    &nbsp;
+                                </span>
+                            `}
+                        </td>
+                    `;
+                })
+            ).join('');
+
+            const percentilesHTML = grupos.flatMap(grupo =>
+                grupo.metricas.map(metrica => {
+                    const dato = normalizarMetrica(datos[metrica.key]);
+
+                    return `
+                        <td class="border border-tierra/20 bg-verde-medio/10 px-3 py-1.5 text-center text-xs font-semibold text-verde-medio whitespace-nowrap">
+                            ${dato.top || '—'}
+                        </td>
+                    `;
+                })
+            ).join('');
 
             return `
-                <div class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-tierra/10 mb-6">
-                    <div class="flex flex-col lg:flex-row gap-5 lg:items-start">
-                        <div class="lg:w-40 lg:flex-shrink-0">
-                            <!-- Logo definitivo esperado: ${config.logoSrc} -->
-                            <div class="w-28 h-20 lg:w-32 lg:h-24 bg-crema rounded-lg border border-tierra/20 flex items-center justify-center overflow-hidden mb-3 lg:mb-0">
-                                <img src="${config.logoSrc}" alt="${config.logoAlt}" class="max-w-full max-h-full object-contain p-2" onerror="this.classList.add('hidden'); this.nextElementSibling.classList.remove('hidden');">
-                                <span class="hidden text-[11px] text-gris-medio text-center px-2 leading-tight">Logo pendiente</span>
+                <section class="bg-white rounded-xl p-4 sm:p-6 shadow-sm border border-tierra/10 mb-6">
+                    <div class="flex flex-col lg:flex-row lg:items-center gap-5">
+
+                        <!-- Logo del organismo -->
+                        <div class="lg:w-36 flex-shrink-0 flex items-center justify-center">
+                            <img
+                                src="${config.logoSrc || ''}"
+                                alt="${config.logoAlt || config.titulo}"
+                                class="max-h-24 max-w-32 object-contain"
+                                onerror="manejarErrorLogo(this)"
+                            >
+
+                            <div class="hidden w-28 h-20 rounded-lg border border-tierra/20 bg-crema items-center justify-center text-center px-2">
+                                <span class="text-xs font-semibold text-gris-medio">
+                                    Logo pendiente
+                                </span>
                             </div>
                         </div>
+
+                        <!-- Contenido -->
                         <div class="min-w-0 flex-1">
-                            <div class="mb-4">
-                                <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-1">${config.titulo}</h2>
-                                <p class="text-xs text-gris-medio">${config.subtitulo}</p>
-                                <p class="text-[11px] text-gris-medio mt-2 lg:hidden">Deslizá horizontalmente para ver todos los indicadores →</p>
-                            </div>
-                            <div class="overflow-x-auto border border-tierra/20 rounded-lg">
-                                <table class="w-full min-w-[980px] border-collapse text-sm">
+                            <h2 class="font-heading text-lg font-semibold text-verde-oscuro mb-1">
+                                ${config.titulo}
+                            </h2>
+
+                            <p class="text-xs text-gris-medio mb-3">
+                                ${config.subtitulo}
+                            </p>
+
+                            <p class="lg:hidden text-xs text-tierra mb-3">
+                                Deslizá horizontalmente para ver todos los indicadores →
+                            </p>
+
+                            <div class="overflow-x-auto pb-2">
+                                <table class="min-w-max w-full border-collapse">
                                     <thead>
                                         <tr>
-                                            <th class="px-3 py-2 bg-verde-oscuro text-crema text-xs uppercase tracking-wide border border-tierra/20 text-left min-w-[92px]">Grupo</th>
-                                            ${gruposHeader}
+                                            ${categoriasHTML}
                                         </tr>
+
                                         <tr>
-                                            <th class="px-3 py-3 bg-crema-oscuro text-verde-oscuro text-xs font-semibold border border-tierra/20 text-left whitespace-nowrap">Indicador</th>
-                                            ${metricasHeader}
+                                            ${encabezadosHTML}
                                         </tr>
                                     </thead>
+
                                     <tbody>
                                         <tr>
-                                            <th class="px-3 py-3 bg-crema-oscuro text-verde-oscuro text-xs font-semibold border border-tierra/20 text-left whitespace-nowrap">Valor</th>
-                                            ${valoresRow}
+                                            ${valoresHTML}
                                         </tr>
+
                                         <tr>
-                                            <th class="px-3 py-2 bg-crema text-gris-medio text-xs font-semibold border border-tierra/20 text-left whitespace-nowrap">TOP</th>
-                                            ${topRow}
+                                            ${percentilesHTML}
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
+
+                            <p class="mt-2 text-xs text-gris-medio">
+                                <strong>TOP:</strong> percentiles dentro del grupo evaluado.
+                            </p>
                         </div>
                     </div>
-                </div>
+                </section>
             `;
         }
 
@@ -502,16 +578,16 @@
             const todasImagenes = [animal.imagen_principal, ...(animal.imagenes_secundarias || [])];
             
             const BREEDPLAN_CONFIG = {
-                titulo: 'Breedplan (International Beef Recording Scheme)',
-                subtitulo: 'Valores expresados según el estándar de evaluación genética Breedplan / International Beef Recording Scheme.',
-                logoSrc: '/assets/img/evaluaciones/logo-breedplan.png',
-                logoAlt: 'International Beef Recording Scheme - Breedplan',
-                grupos: [
+              titulo: 'Breedplan (International Beef Recording Scheme)',
+              subtitulo: 'Valores expresados según el estándar de evaluación genética Breedplan / International Beef Recording Scheme.',
+              logoSrc: '/assets/img/evaluaciones/logo-breedplan.png',
+              logoAlt: 'International Beef Recording Scheme - Breedplan',
+              grupos: [
                     {
                         nombre: 'Facilidad de parto',
                         metricas: [
-                            { key: 'fac_parto_directa', label: 'Dir.' },
-                            { key: 'fac_parto_hijas', label: 'Hijas' }
+                            { key: 'fac_parto_directa', label: 'Fac. Parto Directa' },
+                            { key: 'fac_parto_hijas', label: 'Fac. Parto Hijas' }
                         ]
                     },
                     {
